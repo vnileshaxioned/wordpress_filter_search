@@ -40,9 +40,10 @@ function filter_search() {
   
   // search query
   $search ? $args['s'] = $search : null;
-
+  echo "<pre>";
+  var_dump($args);
+  echo "</pre>";
   $query = new WP_Query($args);
-  $result = '';
   if ($query->have_posts()) {
     while ($query->have_posts()) {
       $query->the_post();
@@ -50,7 +51,7 @@ function filter_search() {
       $permalink = get_the_permalink();
       $title = get_the_title();
       $excerpt = get_the_excerpt(); 
-      $tags = get_the_terms($id, $tag_name);
+      $tags = get_the_terms($id, 'tag');
       
       if ($permalink || $title || $excerpt || $tags) { 
         $result = ($permalink && $title) ? '<h3><a href="'.$permalink.'" class="post-title" title="'.$title.'">'.$title.'</a></h3>' : null;
@@ -63,10 +64,10 @@ function filter_search() {
               }
           $result .= '</ul>';
         }
+        echo $result;
       }
     } wp_reset_postdata();
   }
-  echo $result;
   die();
 }
 
