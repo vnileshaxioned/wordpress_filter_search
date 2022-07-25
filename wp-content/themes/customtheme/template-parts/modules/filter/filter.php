@@ -9,7 +9,7 @@
       $tax_name = $tax_list->name;
       ?>
       <li class="taxonomy">
-        <input type="checkbox" class="tax-name" id="<?php echo $tax_slug; ?>" data-tax="<?php echo $tax_slug; ?>" />
+        <input type="checkbox" class="tax-name" id="<?php echo $tax_slug; ?>" data-name="<?php echo $name; ?>" data-tax="<?php echo $tax_slug; ?>" />
         <label for="<?php echo $tax_slug; ?>"><?php echo $tax_name; ?></label>
       </li>
     <?php }
