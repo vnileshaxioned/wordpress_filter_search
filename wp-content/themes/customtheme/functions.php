@@ -6,6 +6,68 @@ function test_theme_script() {
   wp_enqueue_style('custom-styling', get_stylesheet_uri());
   wp_enqueue_style('custom-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
   wp_enqueue_script('custom-script', get_template_directory_uri().'/assets/js/script.js', array('jquery'), '', true);
+  wp_localize_script( 'custom-script', 'ajax', array('ajaxurl' => admin_url( 'admin-ajax.php' )));
+}
+
+// filter and search function
+add_action("wp_ajax_filter_search", "filter_search");
+add_action("wp_ajax_nopriv_filter_search", "filter_search");
+function filter_search() {
+  $post_per_page = $_POST['post_per_page'];
+  $tag_name = $_POST['tag_name'];
+  $tag_slug = $_POST['tag_slug'];
+  $search = $_POST['search'];
+
+  // all post query
+  $args = array(
+    'post_type' => 'car',
+    'orderby' => 'title',
+    'order' =>'ASC',
+    'post_status' => 'publish',
+    'posts_per_page' => $post_per_page,
+  );
+  
+  // taxonomy query
+  if ($tag_name) {
+    $args['tax_query'] = array(
+      array(
+        'taxonomy' => $tag_name,
+        'field' => 'slug',
+        'terms' => $tag_slug
+      )
+    );
+  }
+  
+  // search query
+  $search ? $args['s'] = $search : null;
+
+  $query = new WP_Query($args);
+  $result = '';
+  if ($query->have_posts()) {
+    while ($query->have_posts()) {
+      $query->the_post();
+      $id = get_the_ID();
+      $permalink = get_the_permalink();
+      $title = get_the_title();
+      $excerpt = get_the_excerpt(); 
+      $tags = get_the_terms($id, $tag_name);
+      
+      if ($permalink || $title || $excerpt || $tags) { 
+        $result = ($permalink && $title) ? '<h3><a href="'.$permalink.'" class="post-title" title="'.$title.'">'.$title.'</a></h3>' : null;
+        $result .= $excerpt ? '<p class="content-paragraph">'.$excerpt.'</p>' : null;
+        if ($tags) {
+          $result .= '<ul class="cpt_taxonomy">';
+              foreach ($tags as $tag) {
+                $tag_name = $tag->name;
+                $result .= $tag_name ? '<li class="taxonomy-list">'.$tag_name.'</li>' : null;
+              }
+          $result .= '</ul>';
+        }
+      }
+    } wp_reset_postdata();
+  }
+  echo $result;
+  die();
 }
 
 // theme support

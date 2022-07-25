@@ -13,9 +13,7 @@
     'posts_per_page' => $posts_per_page
   );
   $query = new WP_Query( $args );
-  // echo "<pre>";
-  // var_dump($query);
-  // echo "</pre>";
+
   if ($query -> have_posts()) { ?>
   <section class="posts">
     <div class="wrapper">
@@ -36,14 +34,14 @@
                 echo ($permalink && $title) ? '<h3><a href="'.$permalink.'" class="post-title" title="'.$title.'">'.$title.'</a></h3>' : null;
                 echo $excerpt ? '<p class="content-paragraph">'.$excerpt.'</p>' : null;
                 if ($tags) { ?>
-              <ul class="cpt_taxonomy">
-                <?php
-                  foreach ($tags as $tag) {
-                    $tag_name = $tag->name;
-                    echo $tag_name ? '<li class="taxonomy-list">'.$tag_name.'</li>' : null;
-                  }
-                ?>
-              </ul>
+                <ul class="cpt_taxonomy">
+                  <?php
+                    foreach ($tags as $tag) {
+                      $tag_name = $tag->name;
+                      echo $tag_name ? '<li class="taxonomy-list">'.$tag_name.'</li>' : null;
+                    }
+                  ?>
+                </ul>
               <?php } ?>
             </article>
           <?php }
