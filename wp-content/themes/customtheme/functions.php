@@ -8,6 +8,14 @@ function test_theme_script() {
   wp_enqueue_script('custom-script', get_template_directory_uri().'/assets/js/script.js', array('jquery'), '', true);
 }
 
+// theme support
+add_action('after_setup_theme', 'custom_theme_setup');
+function custom_theme_setup() {
+  register_nav_menus( array(
+    'primary' => __('Primary Menu', 'customtheme')
+  ) );
+}
+
 // custom post type
 add_action( 'init', function() { custom_post_type('car', 'dashicons-car'); });
 function custom_post_type($cpt, $icon = '') {
