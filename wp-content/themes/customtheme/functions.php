@@ -28,21 +28,54 @@ function filter_search() {
   );
   
   // taxonomy query
-  if ($tag_name) {
-    $args['tax_query'] = array(
-      array(
-        'taxonomy' => $tag_name,
-        'field' => 'slug',
-        'terms' => $tag_slug
-      )
+  if ($tag_slug) {
+    if (count($tag_name) > 1) {
+      $tax_array = array(
+        'relation' => 'OR',
+      );
+      foreach ($tag_name as $taxonomy) {
+        $output = array(
+          'taxonomy' => $taxonomy,
+          'field' => 'slug',
+          'terms' => $tag_slug
+        );
+        array_push($tax_array, $output);
+      }
+
+      $args['tax_query'] = $tax_array;
+    } else {
+      $args['tax_query'] = array(
+        array(
+          'taxonomy' => $tag_name[0],
+          'field' => 'slug',
+          'terms' => $tag_slug
+        )
+      );
+    }
+  }
+
+  // search query
+  if ($search) {
+    $terms = get_terms(array(
+      'name__like' => $search,
+      'field' => 'id'
+    ));
+
+    $tax_array = array(
+      'relation' => 'OR',
     );
+    foreach ($terms as $term) {
+      $output = array(
+        'taxonomy' => $term->taxonomy,
+        'field' => 'slug',
+        'terms' => $term->slug
+      );
+      array_push($tax_array, $output);
+    }
+    
+    $args['tax_query'] = $tax_array;
   }
   
-  // search query
-  $search ? $args['s'] = $search : null;
-  echo "<pre>";
-  var_dump($args);
-  echo "</pre>";
   $query = new WP_Query($args);
   if ($query->have_posts()) {
     while ($query->have_posts()) {
@@ -53,8 +86,8 @@ function filter_search() {
       $excerpt = get_the_excerpt(); 
       $tags = get_the_terms($id, 'tag');
       
-      if ($permalink || $title || $excerpt || $tags) { 
-        $result = ($permalink && $title) ? '<h3><a href="'.$permalink.'" class="post-title" title="'.$title.'">'.$title.'</a></h3>' : null;
+      if ($permalink || $title || $excerpt || $tags) {
+        $result = ($permalink && $title) ? '<article><h3><a href="'.$permalink.'" class="post-title" title="'.$title.'">'.$title.'</a></h3>' : null;
         $result .= $excerpt ? '<p class="content-paragraph">'.$excerpt.'</p>' : null;
         if ($tags) {
           $result .= '<ul class="cpt_taxonomy">';
@@ -62,7 +95,7 @@ function filter_search() {
                 $tag_name = $tag->name;
                 $result .= $tag_name ? '<li class="taxonomy-list">'.$tag_name.'</li>' : null;
               }
-          $result .= '</ul>';
+          $result .= '</ul></article>';
         }
         echo $result;
       }
