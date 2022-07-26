@@ -7,7 +7,7 @@
       var inputValue = data.val();
       searchFilter('', '', inputValue);
     }
-  });;
+  });
 
   // for filter
   var clickTagSlug = [];
@@ -27,6 +27,35 @@
       clickTagSlug.push(tagSlug);
     }
     searchFilter(clickTagSlug, clickTagName, '');
+
+    // display filter
+    var list = [];
+    $.each(clickTagSlug, function (index, value) {
+      result = `<li class="selected-filter"><span>${value}</span></li>`;
+      list.push(result);
+    });
+    $('.display-filter').empty().append(list);
+  });
+
+  // remove selected filter
+  $(document).on('click', '.selected-filter', function () {
+    var data = $(this);
+    $('.tax-name').each(function () {
+      var taxonomy = $(this);
+      if (data.text() == taxonomy.attr('data-tax')) {
+        taxonomy.trigger('click');
+      }
+    });
+  });
+
+  // clear all filter
+  $('.clear-filter').click(function () {
+    $('.tax-name').each(function (index, value) {
+      var taxonomy = $(value);
+      if (taxonomy.is(':checked')) {
+        taxonomy.trigger('click');
+      }
+    });
   });
 
   // searchFilter function to call ajax request
