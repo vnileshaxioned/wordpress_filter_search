@@ -1,24 +1,32 @@
 (function ($) {
 
-  // for tab filter and search function for a work page
-  // searchFilter();
+  // for search
+  $('.search-input').keypress(function (e) {
+    if (e.key == 'Enter') {
+      var data = $(this);
+      var inputValue = data.val();
+      searchFilter('', '', inputValue);
+    }
+  });;
 
-  // for tab filter
+  // for filter
+  var clickTagSlug = [];
   var clickTagName = [];
-  $('.tax-name').click(function (e) {
-    e.preventDefault();
+  $('.tax-name').click(function () {
     var data = $(this);
     var tagName = data.attr('data-name');
     var tagSlug = data.attr('data-tax');
 
-    console.log($.inArray(tagSlug, clickTagName));
-    if ($.inArray(tagSlug, clickTagName) != -1) {
-      clickTagName.splice($.inArray(tagSlug, clickTagName), 1);
-    } else {
-      clickTagName.push(tagSlug);
+    if ($.inArray(tagName, clickTagName) == -1) {
+      clickTagName.push(tagName);
     }
-    console.log(clickTagName)
-    searchFilter(clickTagName, tagName, '');
+    
+    if ($.inArray(tagSlug, clickTagSlug) != -1) {
+      clickTagSlug.splice($.inArray(tagSlug, clickTagSlug), 1);
+    } else {
+      clickTagSlug.push(tagSlug);
+    }
+    searchFilter(clickTagSlug, clickTagName, '');
   });
 
   // searchFilter function to call ajax request
@@ -36,7 +44,6 @@
       },
       datatype: 'json',
       success: function (response) {
-        console.log(response);
         if (response.length) {
           $('.post-container').html(response);
         } else {
