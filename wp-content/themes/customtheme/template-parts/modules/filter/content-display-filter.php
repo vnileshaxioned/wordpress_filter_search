@@ -9,21 +9,24 @@
     $tags = get_the_terms($id, 'tag');
     
     if ($permalink || $title || $excerpt || $tags) { ?>
-    <article>
-      <?php
-        echo ($permalink && $title) ? '<h3><a href="'.$permalink.'" class="post-title" title="'.$title.'">'.$title.'</a></h3>' : null;
+    <li class="post-list">
+      <?php if ($permalink && $title) { ?>
+        <h3 class="post-heading">
+          <a href="<?php echo $permalink; ?>" class="post-title" title="<?php echo $title; ?>"><?php echo $title; ?></a>
+        </h3>
+      <?php }
         echo $excerpt ? '<p class="content-paragraph">'.$excerpt.'</p>' : null;
         if ($tags) { ?>
-        <ul class="cpt_taxonomy">
+        <ul class="taxonomy">
           <?php
             foreach ($tags as $tag) {
               $tag_name = $tag->name;
-              echo $tag_name ? '<li class="taxonomy-list">'.$tag_name.'</li>' : null;
+              echo $tag_name ? '<li class="taxonomy-list"><span>'.$tag_name.'</span></li>' : null;
             }
           ?>
         </ul>
       <?php } ?>
-    </article>
+    </li>
   <?php }
     }
-?>
+  ?>

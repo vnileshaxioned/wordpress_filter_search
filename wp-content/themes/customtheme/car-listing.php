@@ -18,12 +18,12 @@
   <section class="posts">
     <div class="wrapper">
       <?php get_template_part('template-parts/modules/filter/filter'); ?>
-      <div class="post-container" data-posts="<?php echo $posts_per_page; ?>">
+      <ul class="post-container" data-posts="<?php echo $posts_per_page; ?>">
         <?php
           $args = array('query' => $query);
           get_template_part('template-parts/modules/filter/content', 'display-filter', $args);
         ?>
-      </div>
+      </ul>
     </div>
   </section>
 <?php } else { ?>
