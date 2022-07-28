@@ -19,9 +19,9 @@
         if ($tag_taxonomy || $brand_taxonomy || $tags || $brands) { ?>
         <ul class="table">
           <li class="table-head">
-            <?php 
-              echo $tag_taxonomy ? '<div class="column">'.ucfirst($tag_taxonomy).'</div>' : null;
-              echo $brand_taxonomy ? '<div class="column">'.ucfirst($brand_taxonomy).'</div>' : null;
+            <?php
+              taxonomySorting($tag_taxonomy);
+              taxonomySorting($brand_taxonomy);
             ?>
           </li>
           <li class="table-body">
