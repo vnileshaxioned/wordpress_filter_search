@@ -126,15 +126,15 @@ header .wrapper {
   justify-content: space-between;
 }
 
-.menu-menu-1-container { flex-basis: 50%; }
+.navbar-primary { flex-basis: 50%; }
 
-.navbar {
+.menu {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.menu-item { margin-left: 5%; }
+.menu-list { margin-left: 5%; }
 
 
 /*=================================
@@ -168,19 +168,19 @@ header .wrapper {
   flex-wrap: wrap;
 }
 
-article {
-  flex-basis: 30%;
-  margin-bottom: 20px;
+.post-list {
   padding: 10px;
+  margin-bottom: 20px;
+  flex-basis: 30%;
 }
 
 .post-title {
+  margin-bottom: 10px;
+  display: block;
   color: #000;
   font-size: 18px;
   font-weight: 700;
-  display: block;
   text-align: center;
-  margin-bottom: 10px;
 }
 
 .content-paragraph {
@@ -196,16 +196,16 @@ article {
   flex-direction: column;
 }
 
-.cpt_taxonomy {
+.post-list .taxonomy {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
 }
 
 .taxonomy-list {
   margin-top: 5px;
-  font-size: 14px;
   color: gray;
+  font-size: 14px;
 }
 /*=================================
   main styling ends here
