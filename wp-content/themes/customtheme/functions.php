@@ -188,4 +188,19 @@
       'rewrite'           => array( 'slug' => $tax_name ),
     ));
   }
+
+  // taxonomy name function to display in car detail
+  function taxonomyName($tax_name) {
+    if ($tax_name) {
+    $result = '<ul class="taxonomy-column">';
+      foreach ($tax_name as $tax) {
+        $name = $tax->name;
+        $result .= '<li class="table-list">';
+          $result .= '<span class="taxonomy-name">'.$name.'</span>';
+        $result .= '</li>';
+      }
+    $result .= '</ul>';
+    echo $result;
+    }
+  }
 ?>
