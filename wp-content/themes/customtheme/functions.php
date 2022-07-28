@@ -190,11 +190,11 @@
   }
 
   // taxonomy name function to display in car detail
-  function taxonomyName($tax_name) {
-    if ($tax_name) {
+  function taxonomyName($taxonomy_name) {
+    if ($taxonomy_name) {
     $result = '<ul class="taxonomy-column">';
-      foreach ($tax_name as $tax) {
-        $name = $tax->name;
+      foreach ($taxonomy_name as $tax_name) {
+        $name = $tax_name->name;
         $result .= '<li class="table-list">';
           $result .= '<span class="taxonomy-name">'.$name.'</span>';
         $result .= '</li>';
@@ -202,5 +202,21 @@
     $result .= '</ul>';
     echo $result;
     }
+  }
+
+  // filter taxonomy name by asc and desc order
+  function taxonomySorting($taxonomy_name) {
+      if ($taxonomy_name) {
+        $result = '<div class="column">';
+        $result .= '<span class="taxonomy-name">'.ucfirst($taxonomy_name).'</span>';
+        $result .= '<select name="sort" class="sorting">';
+        $result .= '<option value="none">Sort by</option>';
+        $result .= '<option value="asc">ASC</option>';
+        $result .= '<option value="desc">DESC</option>';
+        $result .= '</select>';
+        $result .= '</div>';
+      }
+
+    echo $result;
   }
 ?>
