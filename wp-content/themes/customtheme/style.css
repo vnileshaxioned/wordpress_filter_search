@@ -135,8 +135,6 @@ header .wrapper {
 }
 
 .menu-list { margin-left: 5%; }
-
-
 /*=================================
   Header styling ends here
 =================================*/  
@@ -144,6 +142,7 @@ header .wrapper {
 /*=================================
   main styling starts here
 =================================*/
+/* car listing page started here */
 .posts .wrapper {
   padding: 10px 0;
   display: flex;
@@ -207,6 +206,63 @@ header .wrapper {
   color: gray;
   font-size: 14px;
 }
+/* car listing page ended here */
+
+/* single car started here */
+.post-detail-title {
+  padding-top: 30px;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.post-content {
+  width: 60%;
+  margin: 20px auto;
+}
+
+.table {
+  width: 60%;
+  margin: 10px auto;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-head { display: flex; }
+
+.column {
+  padding: 6px 10px;
+  border-right: 1px solid #000;
+  flex-basis: 50%;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.table-body {
+  border-top: 1px solid #000;
+  display: flex;
+}
+
+.taxonomy-column {
+  border-right: 1px solid #000;
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.column:last-child,
+.taxonomy-column:last-child {
+  border-right: none;
+}
+
+.table-list:last-child { border-bottom: none; }
+
+.table-list {
+  padding: 6px 10px;
+  border-bottom: 1px solid #000;
+}
+/* single car ended here */
 /*=================================
   main styling ends here
 =================================*/
