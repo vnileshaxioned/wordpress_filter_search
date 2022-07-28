@@ -195,8 +195,9 @@
     $result = '<ul class="taxonomy-column">';
       foreach ($taxonomy_name as $tax_name) {
         $name = $tax_name->name;
-        $result .= '<li class="table-list">';
-          $result .= '<span class="taxonomy-name">'.$name.'</span>';
+        $taxonomy = $tax_name->taxonomy;
+        $result .= '<li class="table-list list-'.$taxonomy.'" data-tax-name="'.$taxonomy.'">';
+        $result .= '<span class="taxonomy-name">'.$name.'</span>';
         $result .= '</li>';
       }
     $result .= '</ul>';
@@ -209,7 +210,7 @@
       if ($taxonomy_name) {
         $result = '<div class="column">';
         $result .= '<span class="taxonomy-name">'.ucfirst($taxonomy_name).'</span>';
-        $result .= '<select name="sort" class="sorting">';
+        $result .= '<select name="sort" class="sorting-'.$taxonomy_name.'" data-taxonomy="'.$taxonomy_name.'">';
         $result .= '<option value="none">Sort by</option>';
         $result .= '<option value="asc">ASC</option>';
         $result .= '<option value="desc">DESC</option>';
