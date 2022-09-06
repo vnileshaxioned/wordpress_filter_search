@@ -10,7 +10,7 @@
       for ($current_page = 0; $current_page < $pages; $current_page++) {
         $page = $current_page + 1;
       ?>
-      <li class="pagination-action">
+      <li class="pagination-action-list">
         <a href="#FIXME" class="pagination-action-cta" title="<?php echo 'Page '.$page; ?>"><?php echo $page; ?></a>
       </li>
     <?php } ?>
