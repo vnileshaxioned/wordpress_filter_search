@@ -162,7 +162,10 @@ header .wrapper {
   flex-direction: column;
 }
 
+.car-list-container { position: relative; }
+
 .post-container {
+  margin-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -206,6 +209,54 @@ header .wrapper {
   color: gray;
   font-size: 14px;
 }
+
+.pagination-action {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.pagination-action-list { margin-right: 3%; }
+.pagination-action-list:last-child { margin-right: 0; }
+
+.pagination-action-cta {
+  padding: 8px 13px;
+  border: 1px solid #000;
+  color: #000;
+  transition: all .3s ease;
+}
+
+.pagination {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pagination-cta {
+  padding: 5px 14px;
+  border: 1px solid #000;
+  color: #000;
+  font-size: 22px;
+  text-indent: -9999px;
+  transition: all .3s ease;
+}
+
+.pagination-cta::before {
+  font-family: 'FontAwesome';
+  float: left;
+  text-indent: 0;
+}
+.pagination-cta-left::before { content: '\f104'; }
+.pagination-cta-right::before { content: '\f105'; }
 /* car listing page ended here */
 
 /* single car started here */
@@ -267,24 +318,12 @@ header .wrapper {
   main styling ends here
 =================================*/
 
-/*=================================
-  footer styling starts here
-=================================*/ 
-
-
-
-
-
-
-
- /*=================================
-  footer styling ends here
-=================================*/ 
-
 /*media query starts*/
-/*media query for 995px starts here*/
-@media only screen and (max-width: 995px) {
-
-
-
+/*media query for hover effect starts here*/
+@media only screen and (min-width: 995px) {
+  .pagination-action-cta:hover,
+  .pagination-cta:hover {
+    background-color: #000;
+    color: #fff;
+  }
 }  
