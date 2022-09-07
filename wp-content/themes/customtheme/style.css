@@ -232,6 +232,11 @@ header .wrapper {
   transition: all .3s ease;
 }
 
+.pagination-action-active {
+  background-color: #000;
+  color: #fff;
+}
+
 .pagination {
   width: 100%;
   display: flex;
