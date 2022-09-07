@@ -12,6 +12,31 @@
     wp_localize_script( 'custom-script', 'ajax', array('ajaxurl' => admin_url( 'admin-ajax.php' )));
   }
 
+  // pagination function
+  add_action("wp_ajax_pagination", "pagination");
+  add_action("wp_ajax_nopriv_pagination", "pagination");
+  function pagination() {
+    $offset = $_POST['offset'];
+    $post_per_page = $_POST['post_per_page'];
+
+    $args = array(
+      'post_type' => 'car',
+      'orderby' => 'title',
+      'order' =>'ASC',
+      'post_status' => 'publish',
+      'offset' => $offset,
+      'posts_per_page' => $post_per_page
+    );
+    // var_dump($args);
+    $query = new WP_Query( $args );
+    $total_posts = $query->found_posts;
+    if ($query -> have_posts()) {
+      $args = array('query' => $query);
+      get_template_part('template-parts/modules/filter/content', 'display-filter', $args);
+    }
+    die();
+  }
+
   // filter and search function
   add_action("wp_ajax_filter_search", "filter_search");
   add_action("wp_ajax_nopriv_filter_search", "filter_search");
