@@ -1,5 +1,87 @@
 (function ($) {
   $(document).ready(function () {
+    // pagination
+    var postPerPage = $('.post-container').attr('data-posts'),
+      pageList = $('.pagination-action-list'),
+      page = 0;
+
+    ctaHide(page);
+    pageClicked($(pageList[page]), page);
+
+    $('.pagination-action-list').click(function (e) {
+      e.preventDefault();
+      $('.pagination-action-cta').removeClass('pagination-action-active');
+      var ctaClicked = $(this);
+      pageClicked(ctaClicked, ctaClicked.index());
+    });
+
+    $('.pagination-cta-right').click(function (e) {
+      e.preventDefault();
+      page++;
+      $('.pagination-action-cta').removeClass('pagination-action-active');
+      pageClicked($(pageList[page]), page);
+    });
+
+    $('.pagination-cta-left').click(function (e) {
+      e.preventDefault();
+      page--;
+      $('.pagination-action-cta').removeClass('pagination-action-active');
+      pageClicked($(pageList[page]), page);
+    });
+
+    // to page active start here
+    function pageClicked(clicked, index) {
+      var elementChild = clicked.children('a'),
+        ctaOffset = index * postPerPage;
+      elementChild.addClass('pagination-action-active');
+      ctaHide(ctaOffset, clicked.index());
+      pagination(ctaOffset);
+      page = index;
+    }
+    // to page active start here
+
+    // pagination function to call ajax request
+    function pagination(offsetStart) {
+      $.ajax({
+        type: 'post',
+        url: ajax.ajaxurl,
+        data: {
+          action: 'pagination',
+          offset: offsetStart,
+          post_per_page: postPerPage,
+        },
+        datatype: 'json',
+        success: function (response) {
+          if (response.length) {
+            $('.post-container').html(response);
+          } else {
+            $('.post-container').html('<li><span>No Search found</span></li>');
+          }
+        },
+        error: function (xhr, status, error) {
+          alert('Status: ' + xhr.status + ' ' + error);
+        },
+      });
+    }
+
+    // for previous & next cta hide start here
+    function ctaHide(offset, index = '') {
+      paginationCtaHide($('.pagination-cta-left'), offset === 0);
+      paginationCtaHide(
+        $('.pagination-cta-right'),
+        index === $('.pagination-action-list').length - 1
+      );
+    }
+
+    function paginationCtaHide(element, condition) {
+      if (condition) {
+        element.hide();
+      } else {
+        element.show();
+      }
+    }
+    // for previous & next cta hide end here
+
     // taxonomy sorting
     $('.sorting-tag').click(function () {
       var taxonomy = $(this).attr('data-taxonomy');
@@ -15,15 +97,17 @@
 
     function sorting(sort, taxonomy) {
       var list = $('.taxonomy-column').find('.list-' + taxonomy);
-      $('.list-' + taxonomy).parent().append(
-        list.sort(function (a, b) {
-          if (sort == 'desc') {
-            return $(b).text() > $(a).text() ? 1 : -1;
-          } else {
-            return $(b).text() < $(a).text() ? 1 : -1;
-          }
-        })
-      );
+      $('.list-' + taxonomy)
+        .parent()
+        .append(
+          list.sort(function (a, b) {
+            if (sort == 'desc') {
+              return $(b).text() > $(a).text() ? 1 : -1;
+            } else {
+              return $(b).text() < $(a).text() ? 1 : -1;
+            }
+          })
+        );
     }
 
     // for search
